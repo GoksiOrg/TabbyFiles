@@ -1,0 +1,9 @@
+app:
+  name: TabbyFiles
+spring:
+  mvc:
+    static-path-pattern: /static/**
+server:
+  port: 8080
+  servlet:
+    application-display-name: TabbyFiles
