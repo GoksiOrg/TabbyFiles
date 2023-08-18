@@ -1,6 +1,9 @@
-#IntelliJ
+# IntelliJ
 .idea/*
 target/*
+
+# Generated assets
+/src/main/resources/static/*
 # Logs
 logs
 *.log

@@ -10,13 +10,12 @@ export default defineConfig({
         }
     },
     build: {
-        outDir: "./src/main/resources/static/",
+        manifest: true,
+        outDir: "../src/main/resources/static",
+        assetsDir: "",
         rollupOptions: {
-            input: "./src/main/ts/index.tsx",
-            output: {
-                entryFileNames: "app.js"
-            }
-        }
+            input: "src/index.tsx",
+        },
     },
-    publicDir: "./assets"
+    publicDir: "../assets"
 })

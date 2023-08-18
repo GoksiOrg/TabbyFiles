@@ -1,0 +1,31 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'variables';
+
+/*Global css*/
+body {
+  background-color: #1D267D;
+  color: white;
+}
+
+/*Other*/
+$primary: #1D267D;
+$secondary: #0C134F;
+$tertary: #5C469C;
+
+.flex-center {
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+}
+
+.vh-100-wo-footer {
+  height: calc(100vh - 5vh);
+}
+
+.text-tabby-secondary {
+  color: $secondary !important;
+}
+
+.border-tertary {
+  border-color: $tertary !important;
+}

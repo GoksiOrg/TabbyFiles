@@ -17,6 +17,25 @@
         <java.version>17</java.version>
         <kotlin.version>1.8.22</kotlin.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <activeEnvironment>prod</activeEnvironment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <activeEnvironment>prod</activeEnvironment>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -76,21 +95,26 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <profiles>${activeEnvironment}</profiles>
+                </configuration>
             </plugin>
+
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.9.1</version>
+                <configuration>
+                    <nodeVersion>v18.14.2</nodeVersion>
+                    <npmVersion>9.5.0</npmVersion>
+                    <workingDirectory>frontend</workingDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <configuration>
-                            <nodeVersion>v18.14.2</nodeVersion>
-                            <npmVersion>9.5.0</npmVersion>
-                        </configuration>
                     </execution>
 
                     <execution>
