@@ -1,11 +1,11 @@
 export default function LoginPage() {
     return (
-        <form>
+        <form noValidate>
             <div className="flex-center flex-column vh-100-wo-footer">
                 <div className="p-5 rounded-4 border border-tertary" style={{backgroundColor: "#0C134F"}}>
                     <h2 className="mb-4">Login to continue</h2>
                     <div className="form-floating mb-4">
-                        <input id="usernameInput" className="form-control" placeholder="Goksi"/>
+                        <input id="usernameInput" className="form-control" placeholder="Goksi" required/>
                         <label htmlFor="usernameInput" className="form-label text-tabby-secondary">Username</label>
                         <div className="invalid-feedback">
                             Username must have at least 4 characters !
@@ -13,7 +13,8 @@ export default function LoginPage() {
                     </div>
 
                     <div className="form-floating mb-4 is-invalid">
-                        <input id="passwordInput" className="form-control" type="password" placeholder="maca"/>
+                        <input id="passwordInput" className="form-control" type="password"
+                               placeholder="tabby" required/>
                         <label htmlFor="passwordInput" className="form-label text-tabby-secondary">Password</label>
                         <div className="invalid-feedback">
                             Password doesn't meet the criteria !
