@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable
 
 @Controller
 class SPAController {
-    @GetMapping("/{unused:\\b(?!static\\b)\\w+\\b}/**")
+    @GetMapping("/{unused:^(?!api|static).+}/**")
     fun proceedToFrontend(@PathVariable unused: String): String {
         return "index"
     }
