@@ -6,10 +6,13 @@ export interface LoginData {
 }
 
 export default function login(data: LoginData) {
-    return new Promise(reject => {
-        http.post('/auth/login', data)
+    return new Promise((resolve, reject) => {
+        http.post('/api/csrf')
             .then(() => {
-                console.log(data);
+                http.post('/auth/login', data).then(response => {
+                    window.location = response.request.responseURL;
+                    resolve(response);
+                });
             })
             .catch(reject);
     });

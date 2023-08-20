@@ -25,7 +25,7 @@ class SecurityConfiguration {
             .formLogin {
                 it.defaultSuccessUrl("/")
                 it.loginPage(LOGIN_URL).permitAll()
-                it.failureForwardUrl("$LOGIN_URL?error=true")
+                it.failureUrl("$LOGIN_URL?error=true")
             }
             .logout {
                 it.logoutUrl("/auth/logout/")
