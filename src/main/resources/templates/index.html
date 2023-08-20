@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:th='https://www.thymeleaf.org'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="robots" content="noindex">
-    <meta name="_csrf" th:content="${_csrf.getToken()}">
-    <link rel="icon" href="/static/favicon.ico"/>
+    <meta charset='UTF-8'>
+    <meta name='viewport'
+          content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <meta name='robots' content='noindex'>
+    <meta name='_csrf' th:content='${_csrf.getToken()}'>
+    <link rel='icon' href='/static/favicon.ico' />
     <title th:text="${@environment.getProperty('app.name') ?: 'TabbyFiles'}"></title>
 </head>
 <body>
 <noscript>You need JavaScript to run this app !</noscript>
-<div id="root"></div>
+<div id='root'></div>
 <th:block th:switch="${@environment.getProperty('spring.profiles.active')}">
-    <th:block th:case="dev">
-        <script type="module">
-            import RefreshRuntime from 'http://localhost:5173/@react-refresh'
+    <th:block th:case='dev'>
+        <script type='module'>
+            import RefreshRuntime from 'http://localhost:5173/@react-refresh';
 
-            RefreshRuntime.injectIntoGlobalHook(window)
+            RefreshRuntime.injectIntoGlobalHook(window);
             window.$RefreshReg$ = () => {
-            }
-            window.$RefreshSig$ = () => (type) => type
-            window.__vite_plugin_react_preamble_installed__ = true
+            };
+            window.$RefreshSig$ = () => (type) => type;
+            window.__vite_plugin_react_preamble_installed__ = true;
         </script>
-        <script type="module" src="http://localhost:5173/@vite/client"></script>
-        <script type="module" src="http://localhost:5173/src/index.tsx"></script>
+        <script type='module' src='http://localhost:5173/@vite/client'></script>
+        <script type='module' src='http://localhost:5173/src/index.tsx'></script>
     </th:block>
-    <th:block th:case="prod">
+    <th:block th:case='prod'>
         <!--<script src="/static/app.js"></script>-->
     </th:block>
 </th:block>
