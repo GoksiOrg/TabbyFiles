@@ -1,6 +1,5 @@
 package tech.goksi.tabbyfiles.services
 
-import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -11,7 +10,6 @@ import tech.goksi.tabbyfiles.models.TabbyUser
 import tech.goksi.tabbyfiles.repositories.TabbyUserRepository
 
 @Service
-@Transactional
 class TabbyUserService(private val tabbyUserRepository: TabbyUserRepository) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails {
         return tabbyUserRepository.findByUsername(username)
@@ -29,6 +27,6 @@ class TabbyUserService(private val tabbyUserRepository: TabbyUserRepository) : U
 
     fun getUserByUsername(username: String): TabbyUser {
         return tabbyUserRepository.findByUsername(username)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "User with username $username is not found") }
+            .orElseThrow { UsernameNotFoundException("User with username $username is not found") }
     }
 }
