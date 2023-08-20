@@ -7,11 +7,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
 @Configuration
 class SecurityConfiguration {
+    companion object {
+        const val LOGIN_URL = "/auth/login"
+    }
+
     @Bean
     fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity.authorizeHttpRequests {
@@ -21,9 +24,8 @@ class SecurityConfiguration {
         }
             .formLogin {
                 it.defaultSuccessUrl("/")
-                it.loginPage("/auth/login/").permitAll()
-                it.loginProcessingUrl("/auth/login/")
-                it.failureForwardUrl("/auth/login?error=true")
+                it.loginPage(LOGIN_URL).permitAll()
+                it.failureForwardUrl("$LOGIN_URL?error=true")
             }
             .logout {
                 it.logoutUrl("/auth/logout/")
@@ -33,7 +35,7 @@ class SecurityConfiguration {
                 it.csrfTokenRequestHandler(CsrfTokenRequestAttributeHandler())
             }
             .exceptionHandling {
-                it.defaultAuthenticationEntryPointFor(Http401EntryPoint(), AntPathRequestMatcher("/api/**"))
+                it.authenticationEntryPoint(RestAwareEntryPoint(LOGIN_URL))
             }
 
         return httpSecurity.build()

@@ -16,7 +16,7 @@ class TabbyUser(
     @Column(name = "user_id")
     val id: Long,
     @Column(nullable = false)
-    @Size(min = 4, message = "Username must have at least 4 characters !")
+    @Size(min = 4, max = 15, message = "Username must have at least 4 characters !")
     private val username: String,
     @Column(nullable = false)
     private val password: String,

@@ -1,6 +1,5 @@
 package tech.goksi.tabbyfiles.controllers
 
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,8 +9,7 @@ import tech.goksi.tabbyfiles.services.TabbyUserService
 
 
 @RestController
-@RequestMapping("users")
-@PreAuthorize
+@RequestMapping("users", consumes = ["application/json"])
 class UserController(private val userService: TabbyUserService) {
     @GetMapping
     fun getAll(): List<TabbyUser> {
