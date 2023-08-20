@@ -1,11 +1,22 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
+import { useSearchParams } from 'react-router-dom';
+import DangerAlert from '../components/DangerAlert.tsx';
 
 export default function LoginPage() {
+    const [params, setParams] = useSearchParams();
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
+    const [loginError, setLoginError] = useState<boolean>(false);
     const usernameReference = useRef<HTMLInputElement>(null);
     const passwordReference = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        if (params.get('error') === 'true') {
+            params.delete('error');
+            setParams(params);
+            setLoginError(true);
+        } else setLoginError(false);
+    }, []);
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.target.classList.remove('is-invalid');
     };
@@ -22,8 +33,13 @@ export default function LoginPage() {
             username: usernameReference.current!!.value,
             password: passwordReference.current!!.value,
         })
-            .then(() => setSubmitting(false))
-            .catch(console.log);
+            .then(() => {
+                setSubmitting(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setSubmitting(false);
+            });
     };
     return (
         <form onSubmit={performLoginAction} noValidate>
@@ -62,7 +78,7 @@ export default function LoginPage() {
                         </label>
                         <div className='invalid-feedback'>Password doesn&apos;t meet the criteria !</div>
                     </div>
-
+                    <DangerAlert shouldRender={loginError} message={'Invalid username or password !'} />
                     <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
                         Login
                     </button>
