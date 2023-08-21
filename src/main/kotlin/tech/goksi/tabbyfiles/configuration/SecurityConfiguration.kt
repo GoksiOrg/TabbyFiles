@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
+
 @Configuration
 class SecurityConfiguration {
     companion object {
@@ -19,14 +20,20 @@ class SecurityConfiguration {
     fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity.authorizeHttpRequests {
             //TODO: custom error page
-            it.requestMatchers(antMatcher("/error"), antMatcher("/static/**"), antMatcher("/api/csrf")).permitAll()
+            it.requestMatchers(
+                antMatcher("/error"), antMatcher("/static/**"), antMatcher("/api/csrf"), antMatcher(
+                    LOGIN_URL
+                )
+            ).permitAll()
             it.anyRequest().authenticated()
         }
             .formLogin {
                 it.defaultSuccessUrl("/")
                 it.loginPage(LOGIN_URL).permitAll()
                 it.failureUrl("$LOGIN_URL?error=true")
-            }
+            }/*.addFilterAt(
+                JsonAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java
+            )*/
             .logout {
                 it.logoutUrl("/auth/logout/")
             }
