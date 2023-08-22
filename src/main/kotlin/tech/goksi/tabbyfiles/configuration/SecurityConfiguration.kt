@@ -6,6 +6,7 @@ import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
@@ -31,9 +32,9 @@ class SecurityConfiguration {
                 it.defaultSuccessUrl("/")
                 it.loginPage(LOGIN_URL).permitAll()
                 it.failureUrl("$LOGIN_URL?error=true")
-            }/*.addFilterAt(
+            }.addFilterAt(
                 JsonAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java
-            )*/
+            )
             .logout {
                 it.logoutUrl("/auth/logout/")
             }
