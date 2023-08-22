@@ -37,7 +37,7 @@ export default function LoginPage() {
                 setSubmitting(false);
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 setSubmitting(false);
             });
     };
