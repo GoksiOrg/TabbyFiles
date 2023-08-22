@@ -6,13 +6,15 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpMethod.POST
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
 
-class JsonAuthenticationFilter : UsernamePasswordAuthenticationFilter() {
+class JsonAuthenticationFilter(authManager: AuthenticationManager) :
+    UsernamePasswordAuthenticationFilter(authManager) {
     companion object {
         val objectMapper = ObjectMapper()
     }

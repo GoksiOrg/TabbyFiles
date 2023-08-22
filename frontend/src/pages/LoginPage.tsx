@@ -1,22 +1,13 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
-import { useSearchParams } from 'react-router-dom';
 import DangerAlert from '../components/DangerAlert.tsx';
 
 export default function LoginPage() {
-    const [params, setParams] = useSearchParams();
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
     const [loginError, setLoginError] = useState<boolean>(false);
     const usernameReference = useRef<HTMLInputElement>(null);
     const passwordReference = useRef<HTMLInputElement>(null);
-    useEffect(() => {
-        if (params.get('error') === 'true') {
-            params.delete('error');
-            setParams(params);
-            setLoginError(true);
-        } else setLoginError(false);
-    }, []);
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.target.classList.remove('is-invalid');
     };
@@ -37,7 +28,11 @@ export default function LoginPage() {
                 setSubmitting(false);
             })
             .catch(err => {
-                console.error(err);
+                if (err.response.status === 401) {
+                    setLoginError(true);
+                } else {
+                    console.error(err);
+                }
                 setSubmitting(false);
             });
     };
