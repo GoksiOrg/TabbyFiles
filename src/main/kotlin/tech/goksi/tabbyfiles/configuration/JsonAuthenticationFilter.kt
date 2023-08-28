@@ -13,13 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
 
-class JsonAuthenticationFilter(authManager: AuthenticationManager) :
+class JsonAuthenticationFilter(private val objectMapper: ObjectMapper, authManager: AuthenticationManager) :
     UsernamePasswordAuthenticationFilter(authManager) {
-    companion object {
-        val objectMapper = ObjectMapper()
-    }
-
-
     init {
         setRequiresAuthenticationRequestMatcher(antMatcher(POST, "/auth/login"))
     }

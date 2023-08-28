@@ -28,10 +28,9 @@
         <script type='module' src='http://localhost:5173/src/index.tsx'></script>
     </th:block>
     <th:block th:case='prod'>
-        <!--<script src="/static/app.js"></script>-->
+        <script th:src='${manifest.getJsBundlePath()}'></script>
+        <link rel='stylesheet' th:href='${manifest.getCssPath()}' />
     </th:block>
 </th:block>
-<!--<h1 th:text="${@environment.getProperty('spring-boot.run.profiles') ?: 'nista'}"></h1>
-<h1 th:text="${@environment.getProperty('spring.profiles.active') ?:  'nista'}"></h1>-->
 </body>
 </html>

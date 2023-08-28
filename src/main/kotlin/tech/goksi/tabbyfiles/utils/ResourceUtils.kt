@@ -3,9 +3,9 @@ package tech.goksi.tabbyfiles.utils
 import java.io.File
 
 object ResourceUtils {
-    private fun readResource(name: String): String {
+    fun readResource(name: String): String {
         return ResourceUtils::class.java.classLoader
-            .getResource("default-application.yml")!!.readText()
+            .getResource(name)!!.readText()
     }
 
     fun writeResource(file: File, name: String) {

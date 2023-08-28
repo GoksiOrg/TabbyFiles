@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
 import DangerAlert from '../components/DangerAlert.tsx';
-
+/*TODO: global 500 error*/
 export default function LoginPage() {
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
     const [loginError, setLoginError] = useState<boolean>(false);

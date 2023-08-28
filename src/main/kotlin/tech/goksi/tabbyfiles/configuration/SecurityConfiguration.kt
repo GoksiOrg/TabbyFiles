@@ -1,5 +1,6 @@
 package tech.goksi.tabbyfiles.configuration
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -14,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMa
 
 
 @Configuration
-class SecurityConfiguration {
+class SecurityConfiguration(private val objectMapper: ObjectMapper) {
     companion object {
         const val LOGIN_URL = "/auth/login"
     }
@@ -35,7 +36,7 @@ class SecurityConfiguration {
                 it.loginPage(LOGIN_URL).permitAll()
                 it.failureUrl("$LOGIN_URL?error=true")
             }.addFilterAt(
-                JsonAuthenticationFilter(authManager), UsernamePasswordAuthenticationFilter::class.java
+                JsonAuthenticationFilter(objectMapper, authManager), UsernamePasswordAuthenticationFilter::class.java
             )
             .logout {
                 it.logoutUrl("/auth/logout/")

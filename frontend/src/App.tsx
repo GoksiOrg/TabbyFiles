@@ -1,4 +1,3 @@
-import '../sass/app.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense } from 'react';
 import LoginPage from './pages/LoginPage.tsx';
