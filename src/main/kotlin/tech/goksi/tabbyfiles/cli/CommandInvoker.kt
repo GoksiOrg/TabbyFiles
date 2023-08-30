@@ -1,12 +1,12 @@
 package tech.goksi.tabbyfiles.cli
 
-import tech.goksi.tabbyfiles.cli.commands.Command
+import tech.goksi.tabbyfiles.cli.commands.api.TopLevelCommand
 import tech.goksi.tabbyfiles.utils.SLF4J
 import java.util.*
 
 class CommandInvoker {
 
-    private val commandMap: Map<String, Command>
+    private val commandMap: Map<String, TopLevelCommand>
     private val logger by SLF4J
 
     init {
@@ -25,5 +25,12 @@ class CommandInvoker {
             return
         }
         command.execute(args)
+    }
+
+    private fun getHelpCommand(): String {
+        for (command in commandMap.values) {
+
+        }
+        return ""
     }
 }
