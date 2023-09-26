@@ -3,6 +3,7 @@ package tech.goksi.tabbyfiles.models
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import java.awt.Color
 import java.time.LocalDateTime
 
 @Entity
@@ -13,6 +14,7 @@ class Role(
     val id: Long,
     @Column(unique = true)
     val name: String,
+    val color: Color,
     val admin: Boolean,
     @Column(name = "max_upload", nullable = false)
     val maxUpload: Long,

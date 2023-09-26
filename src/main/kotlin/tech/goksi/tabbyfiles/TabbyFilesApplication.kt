@@ -2,22 +2,14 @@ package tech.goksi.tabbyfiles
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import tech.goksi.tabbyfiles.cli.CommandInvoker
 import tech.goksi.tabbyfiles.utils.ResourceUtils
 import tech.goksi.tabbyfiles.utils.SLF4J
 import java.io.File
-import java.util.*
 
 @SpringBootApplication
 class TabbyFilesApplication
 
 fun main(args: Array<String>) {
-    if (args.isNotEmpty() && args[0].equals("cli", true)) {
-        val commandInvoker = CommandInvoker()
-        val cliArgs = LinkedList(args.asList())
-        commandInvoker.invoke(cliArgs)
-        return
-    }
     val configurationFile = File("application.yml")
     if (!configurationFile.exists()) {
         val logger by SLF4J
