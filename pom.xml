@@ -12,7 +12,7 @@
     <artifactId>tabbyfiles</artifactId>
     <version>v1.0.0</version>
     <name>TabbyFiles</name>
-    <description>Simple file managing webapp !</description>
+    <description>Simple file managing web app !</description>
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.8.22</kotlin.version>
@@ -22,8 +22,31 @@
     <profiles>
         <profile>
             <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>npm install</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>run build</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <properties>
-                <activeEnvironment>prod</activeEnvironment>
+                <activeEnvironment>dev</activeEnvironment>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -72,9 +95,9 @@
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -119,7 +142,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <profiles>${activeEnvironment}</profiles>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>${activeEnvironment}</spring.profiles.active>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
 
