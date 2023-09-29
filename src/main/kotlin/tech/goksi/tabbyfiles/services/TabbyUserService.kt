@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import tech.goksi.tabbyfiles.models.Role
 import tech.goksi.tabbyfiles.models.TabbyUser
 import tech.goksi.tabbyfiles.repositories.TabbyUserRepository
 
@@ -28,5 +29,10 @@ class TabbyUserService(private val tabbyUserRepository: TabbyUserRepository) : U
     fun getUserByUsername(username: String): TabbyUser {
         return tabbyUserRepository.findByUsername(username)
             .orElseThrow { UsernameNotFoundException("User with username $username is not found") }
+    }
+
+    fun addRoleToUser(user: TabbyUser, role: Role) {
+        user.roles.add(role)
+        tabbyUserRepository.save(user)
     }
 }
