@@ -27,7 +27,7 @@ class TabbyUser(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "role_id")]
     )
-    val roles: List<Role>,
+    val roles: MutableSet<Role>,
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -56,4 +56,26 @@ class TabbyUser(
     override fun isCredentialsNonExpired() = true
 
     override fun isEnabled() = true
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is TabbyUser) return false
+
+        if (id != other.id) return false
+        if (username != other.username) return false
+        if (password != other.password) return false
+        if (createdAt != other.createdAt) return false
+        if (updatedAt != other.updatedAt) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + username.hashCode()
+        result = 31 * result + password.hashCode()
+        result = 31 * result + createdAt.hashCode()
+        result = 31 * result + updatedAt.hashCode()
+        return result
+    }
 }
