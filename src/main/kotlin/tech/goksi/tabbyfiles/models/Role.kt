@@ -53,4 +53,8 @@ class Role(
         result = 31 * result + updatedAt.hashCode()
         return result
     }
+
+    override fun toString(): String {
+        return name
+    }
 }

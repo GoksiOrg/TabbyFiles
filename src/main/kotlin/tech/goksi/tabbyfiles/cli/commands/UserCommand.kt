@@ -7,6 +7,9 @@ import org.springframework.shell.component.flow.SelectItem
 import org.springframework.shell.standard.ShellCommandGroup
 import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod
+import org.springframework.shell.table.BeanListTableModel
+import org.springframework.shell.table.BorderStyle
+import org.springframework.shell.table.TableBuilder
 import tech.goksi.tabbyfiles.requests.UserRequest
 import tech.goksi.tabbyfiles.services.RoleService
 import tech.goksi.tabbyfiles.services.TabbyUserService
@@ -22,7 +25,15 @@ class UserCommand(
 ) {
     @ShellMethod(key = ["user-list"], value = "Shows list of all currently registered users")
     fun list() {
-
+        val users = userService.getAllUsers()
+        val tableModel =
+            BeanListTableModel(
+                users,
+                linkedMapOf("id" to "ID", "username" to "Username", "roles" to "Roles", "createdAt" to "Registered at")
+            )
+        val tableBuilder = TableBuilder(tableModel)
+        tableBuilder.addFullBorder(BorderStyle.fancy_light)
+        terminal.writer().println(tableBuilder.build().render(80))
     }
 
     @ShellMethod(key = ["user-register"], value = "Register new user on the system")
@@ -44,9 +55,11 @@ class UserCommand(
             .build()
         val result = flow.run()
         val resultContext = result.context
+
         val username = resultContext.get<String>("username")
         val password = resultContext.get<String>("password")
         val rolesToGive = resultContext.get<List<String>>("roles").map { str -> roles.find { it.name == str }!! }
+
         val userRequest = UserRequest(username, password, rolesToGive)
         val failed = validator.validate(userRequest)
         if (failed.isEmpty()) {
