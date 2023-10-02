@@ -1,7 +1,6 @@
 package tech.goksi.tabbyfiles.models
 
 import jakarta.persistence.*
-import jakarta.validation.constraints.Size
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import org.springframework.security.core.GrantedAuthority
@@ -15,9 +14,8 @@ class TabbyUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    val id: Long,
+    val id: Long = 0L,
     @Column(nullable = false)
-    @Size(min = 4, max = 15, message = "Username must have at least 4 characters !")
     private val username: String,
     @Column(nullable = false)
     private val password: String,

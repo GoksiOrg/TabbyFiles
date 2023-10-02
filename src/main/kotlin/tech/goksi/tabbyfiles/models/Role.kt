@@ -11,7 +11,7 @@ class Role(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
-    val id: Long,
+    val id: Long = 0L,
     @Column(unique = true)
     val name: String,
     val color: Color,

@@ -1,13 +1,13 @@
 package tech.goksi.tabbyfiles.controllers
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 import tech.goksi.tabbyfiles.models.TabbyUser
+import tech.goksi.tabbyfiles.requests.UserRequest
 import tech.goksi.tabbyfiles.services.TabbyUserService
 
-
+/*TODO: admin middleware*/
 @RestController
 @RequestMapping("users", consumes = ["application/json"])
 class UserController(private val userService: TabbyUserService) {
@@ -24,5 +24,11 @@ class UserController(private val userService: TabbyUserService) {
     @GetMapping("{username}")
     fun getByUsername(@PathVariable username: String): TabbyUser {
         return userService.getUserByUsername(username)
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@Valid @RequestBody userRequest: UserRequest): TabbyUser {
+        return userService.addUser(userRequest)
     }
 }
