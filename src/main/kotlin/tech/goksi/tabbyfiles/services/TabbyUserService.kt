@@ -53,4 +53,8 @@ class TabbyUserService(
         user.roles.add(role)
         tabbyUserRepository.save(user)
     }
+
+    fun deleteUser(user: TabbyUser) {
+        tabbyUserRepository.delete(user)
+    }
 }
