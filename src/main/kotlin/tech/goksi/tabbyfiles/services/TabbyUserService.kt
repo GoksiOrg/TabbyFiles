@@ -31,8 +31,11 @@ class TabbyUserService(
         return tabbyUserRepository.save(user)
     }
 
-    fun addUser(userRequest: UserRequest): TabbyUser =
-        addUser(userRequest.username, userRequest.password, userRequest.roles)
+    fun addUser(userRequest: UserRequest) = addUser(
+        userRequest.username,
+        userRequest.password,
+        userRequest.roles
+    )
 
 
     fun getAllUsers(): List<TabbyUser> {

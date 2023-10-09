@@ -34,7 +34,7 @@ class UserCommand(
     }
 
     @ShellMethod(key = ["user-create"], value = "Register new user on the system")
-    fun register() {
+    fun create() {
         val roles = roleService.getAllRoles()
         val rolesToSelect = roles.map { SelectItem.of(it.name, it.name) }
         val flow = flowBuilder.clone().reset()
