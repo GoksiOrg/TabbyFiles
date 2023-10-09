@@ -19,7 +19,7 @@ class Role(
     @Column(name = "max_upload", nullable = false)
     val maxUpload: Long,
     @ManyToMany(mappedBy = "roles")
-    val users: Set<TabbyUser>,
+    val users: Set<TabbyUser> = emptySet(),
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
