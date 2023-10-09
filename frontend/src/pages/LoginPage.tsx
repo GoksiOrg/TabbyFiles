@@ -30,6 +30,7 @@ export default function LoginPage() {
             .catch(err => {
                 if (err.response.status === 401) {
                     setLoginError(true);
+                    console.log(err);
                 } else {
                     console.error(err);
                 }
@@ -73,7 +74,11 @@ export default function LoginPage() {
                         </label>
                         <div className='invalid-feedback'>Password doesn&apos;t meet the criteria !</div>
                     </div>
-                    <DangerAlert shouldRender={loginError} message={'Invalid username or password !'} />
+                    <DangerAlert
+                        shouldRender={loginError}
+                        message={'Invalid username or password !'}
+                        onClose={() => setLoginError(false)}
+                    />
                     <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
                         Login
                     </button>

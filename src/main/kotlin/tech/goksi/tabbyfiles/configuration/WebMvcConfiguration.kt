@@ -16,6 +16,6 @@ class WebMvcConfiguration : WebMvcConfigurer {
     }
 
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(AdminAccessInterceptor())
+        registry.addInterceptor(AdminAccessInterceptor()) // TODO: probably url path
     }
 }

@@ -33,8 +33,7 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
         }
             .formLogin {
                 it.defaultSuccessUrl("/")
-                it.loginPage(LOGIN_URL).permitAll()
-                it.failureUrl("$LOGIN_URL?error=true")
+                it.loginPage(LOGIN_URL)
             }.addFilterAt(
                 JsonAuthenticationFilter(objectMapper, authManager), UsernamePasswordAuthenticationFilter::class.java
             )

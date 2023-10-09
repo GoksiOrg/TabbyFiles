@@ -1,4 +1,4 @@
-export default function DangerAlert(props: { shouldRender: boolean; message: string }) {
+export default function DangerAlert(props: { shouldRender: boolean; message: string; onClose?: () => void }) {
     if (!props.shouldRender) return null;
     return (
         <div className='alert alert-danger alert-dismissible fade show d-flex align-items-center' role='alert'>
@@ -14,7 +14,13 @@ export default function DangerAlert(props: { shouldRender: boolean; message: str
                 <path d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z' />
             </svg>
             <div>{props.message}</div>
-            <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            <button
+                onClick={props.onClose}
+                type='button'
+                className='btn-close'
+                data-bs-dismiss='alert'
+                aria-label='Close'
+            ></button>
         </div>
     );
 }
