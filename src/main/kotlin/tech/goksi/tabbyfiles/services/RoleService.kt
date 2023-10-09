@@ -36,6 +36,15 @@ class RoleService(private val roleRepository: RoleRepository) {
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Role with name $name is not found !") }
     }
 
+    fun getRoleById(id: Long): Role {
+        return roleRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Role with id $id is not found !") }
+    }
+
+    fun deleteRole(role: Role) {
+        roleRepository.delete(role)
+    }
+
     fun getAllAdminRoles(): List<Role> {
         return roleRepository.findByAdmin(true)
     }

@@ -1,10 +1,10 @@
 package tech.goksi.tabbyfiles.cli.commands
 
 import jakarta.validation.Validator
+import org.springframework.shell.component.ConfirmationInput
 import org.springframework.shell.component.flow.ComponentFlow
-import org.springframework.shell.standard.ShellCommandGroup
-import org.springframework.shell.standard.ShellComponent
-import org.springframework.shell.standard.ShellMethod
+import org.springframework.shell.standard.*
+import org.springframework.web.server.ResponseStatusException
 import tech.goksi.tabbyfiles.cli.services.ConsoleServices
 import tech.goksi.tabbyfiles.cli.services.TableServices
 import tech.goksi.tabbyfiles.requests.RoleRequest
@@ -18,7 +18,7 @@ class RoleCommand(
     private val flowBuilder: ComponentFlow.Builder,
     private val validator: Validator,
     private val console: ConsoleServices
-) {
+) : AbstractShellComponent() {
     @ShellMethod(key = ["role-list"], value = "Shows list of all roles existing on the system")
     fun list() {
         val roles = roleService.getAllRoles()
@@ -76,6 +76,31 @@ class RoleCommand(
             for (constraintViolation in failed) {
                 console.error(constraintViolation.message)
             }
+        }
+    }
+
+    @ShellMethod(key = ["role-delete"], value = "Deletes specific role from the system !")
+    fun delete(@ShellOption(help = "ID of role u wish to remove from system") id: Long) {
+        val role = try {
+            roleService.getRoleById(id)
+        } catch (exception: ResponseStatusException) {
+            if (exception.statusCode.value() == 404) {
+                console.error("Role with id %d is not found in the system !", id)
+                null
+            } else throw exception
+        } ?: return
+
+        val confirmation =
+            ConfirmationInput(terminal, "Are you sure that you want to delete user ${role.name} ?", false)
+        confirmation.setResourceLoader(resourceLoader)
+        confirmation.templateExecutor = templateExecutor
+        val resultContext = confirmation.run(ConfirmationInput.ConfirmationInputContext.empty())
+
+        if (resultContext.resultValue) {
+            roleService.deleteRole(role)
+            console.success("Role with name %s is successfully deleted from the system !", role.name)
+        } else {
+            console.write("Aborting...")
         }
     }
 }
