@@ -3,6 +3,7 @@ package tech.goksi.tabbyfiles.controllers
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import tech.goksi.tabbyfiles.annotations.AdminAccess
 import tech.goksi.tabbyfiles.models.TabbyUser
 import tech.goksi.tabbyfiles.requests.UserRequest
 import tech.goksi.tabbyfiles.services.TabbyUserService
@@ -10,6 +11,7 @@ import tech.goksi.tabbyfiles.services.TabbyUserService
 /*TODO: admin middleware*/
 @RestController
 @RequestMapping("users", consumes = ["application/json"])
+@AdminAccess
 class UserController(private val userService: TabbyUserService) {
     @GetMapping
     fun getAll(): List<TabbyUser> {
