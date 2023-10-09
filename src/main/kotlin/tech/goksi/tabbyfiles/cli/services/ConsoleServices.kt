@@ -21,4 +21,9 @@ class ConsoleServices(private val terminal: Terminal) {
         terminal.writer().print("ERROR> ")
         terminal.writer().printf(AnsiOutput.toString(AnsiColor.RED, message, AnsiColor.DEFAULT) + "%n", *args)
     }
+
+    fun warning(message: String, vararg args: Any) {
+        terminal.writer().print("WARNING> ")
+        terminal.writer().printf(AnsiOutput.toString(AnsiColor.YELLOW, message, AnsiColor.DEFAULT) + "%n", *args)
+    }
 }
