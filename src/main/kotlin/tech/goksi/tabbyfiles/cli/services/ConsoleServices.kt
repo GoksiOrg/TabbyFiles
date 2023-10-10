@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class ConsoleServices(private val terminal: Terminal) {
     fun write(message: String, vararg args: Any) {
-        terminal.writer().print("> ")
+        terminal.writer().print("INFO> ")
         terminal.writer().printf(AnsiOutput.toString(AnsiColor.BLUE, message, AnsiColor.DEFAULT) + "%n", *args)
     }
 
