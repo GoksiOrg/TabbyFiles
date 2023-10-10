@@ -79,7 +79,7 @@ class RoleCommand(
         }
     }
 
-    @ShellMethod(key = ["role-delete"], value = "Deletes specific role from the system !")
+    @ShellMethod(key = ["role-delete"], value = "Deletes specific role from the system")
     fun delete(@ShellOption(help = "ID of role u wish to remove from system") id: Long) {
         val role = try {
             roleService.getRoleById(id)
