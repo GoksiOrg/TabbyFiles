@@ -6,5 +6,5 @@ import tech.goksi.tabbyfiles.utils.version.http.response.GithubResponse
 interface GithubClient {
 
     @GetExchange("/releases/latest")
-    fun getResponse(): GithubResponse
+    fun getLatestRelease(): GithubResponse
 }

@@ -26,7 +26,7 @@ class VersionChecker(
             return
         }
         val client = getGithubClient()
-        val response = client.getResponse()
+        val response = client.getLatestRelease()
         if (response.version > version) {
             logger.warn(
                 "You are not running latest version of TabbyFiles ! " +
