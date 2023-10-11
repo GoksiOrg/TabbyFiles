@@ -11,7 +11,7 @@ class Version(
         const val CANARY_VERSION = "canary"
     }
 
-    private final val internalVersion = version.split(".")
+    private final val internalVersion = version.replace("v", "").split(".")
 
     init {
         if (internalVersion.size != 3 && version != CANARY_VERSION) {
@@ -23,7 +23,7 @@ class Version(
 
     override fun compareTo(other: Version): Int {
         var result = 0
-        if (other.isCanary()) return 0 //canary is always latest :P
+        if (other.isCanary()) return -1 //canary is always latest :P
         for (i in 0..2) {
             val v1 = internalVersion[i].toInt()
             val v2 = other.internalVersion[i].toInt()
@@ -34,5 +34,9 @@ class Version(
             }
         }
         return result
+    }
+
+    override fun toString(): String {
+        return version
     }
 }
