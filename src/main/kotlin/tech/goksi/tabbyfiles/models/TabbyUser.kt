@@ -15,7 +15,7 @@ class TabbyUser(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     val id: Long = 0L,
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private val username: String,
     @Column(nullable = false)
     private val password: String,
