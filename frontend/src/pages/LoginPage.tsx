@@ -2,12 +2,14 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
 import DangerAlert from '../components/DangerAlert.tsx';
+import { useErrorBoundary } from 'react-error-boundary';
 /*TODO: global 500 error*/
 export default function LoginPage() {
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
     const [loginError, setLoginError] = useState<boolean>(false);
     const usernameReference = useRef<HTMLInputElement>(null);
     const passwordReference = useRef<HTMLInputElement>(null);
+    const { showBoundary } = useErrorBoundary();
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.target.classList.remove('is-invalid');
     };
@@ -32,7 +34,7 @@ export default function LoginPage() {
                     setLoginError(true);
                     console.log(err);
                 } else {
-                    console.error(err);
+                    showBoundary(err);
                 }
                 setSubmitting(false);
             });
