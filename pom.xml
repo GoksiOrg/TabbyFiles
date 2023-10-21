@@ -136,9 +136,6 @@
             <resource>
                 <filtering>true</filtering>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>application.properties</include>
-                </includes>
             </resource>
         </resources>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
