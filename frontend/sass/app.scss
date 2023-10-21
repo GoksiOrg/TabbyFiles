@@ -1,17 +1,14 @@
-@import 'bootstrap/scss/bootstrap';
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
 @import 'variables';
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+@import 'bootstrap/scss/bootstrap';
 
 /*Global css*/
 body {
-  background-color: #1D267D;
+  background-color: $primary-tabby;
   color: white;
 }
-
-/*Other*/
-$primary: #1D267D;
-$secondary: #0C134F;
-$tertary: #5C469C;
 
 .flex-center {
   @extend .d-flex;
@@ -24,9 +21,9 @@ $tertary: #5C469C;
 }
 
 .text-tabby-secondary {
-  color: $secondary !important;
+  color: $secondary-tabby !important;
 }
 
 .border-tertary {
-  border-color: $tertary !important;
+  border-color: $tertary-tabby !important;
 }
