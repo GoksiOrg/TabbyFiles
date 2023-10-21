@@ -6,6 +6,7 @@ import TabbyFooter from './components/TabbyFooter.tsx';
 import MainPage from './pages/MainPage.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import GlobalError from './components/GlobalError.tsx';
+import NotFound from './components/NotFound.tsx';
 
 export default function App() {
     return (
@@ -33,6 +34,7 @@ export default function App() {
                                 </Suspense>
                             }
                         />
+                        <Route path={'*'} element={<NotFound />} />
                     </Routes>
                 </ErrorBoundary>
             </BrowserRouter>
