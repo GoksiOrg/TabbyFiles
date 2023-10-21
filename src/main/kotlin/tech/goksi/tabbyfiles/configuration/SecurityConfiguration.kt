@@ -10,8 +10,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.context.DelegatingSecurityContextRepository
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
+import tech.goksi.tabbyfiles.filters.JsonAuthenticationFilter
+import tech.goksi.tabbyfiles.filters.LoginPageRedirectFilter
 
 
 @Configuration
@@ -22,6 +27,15 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
 
     @Bean
     fun filterChain(httpSecurity: HttpSecurity, authManager: AuthenticationManager): SecurityFilterChain {
+        val jsonFilter = JsonAuthenticationFilter(objectMapper, authManager).apply {
+            setSecurityContextRepository(
+                DelegatingSecurityContextRepository(
+                    RequestAttributeSecurityContextRepository(),
+                    HttpSessionSecurityContextRepository()
+                )
+            )
+        }
+
         httpSecurity.authorizeHttpRequests {
             //TODO: custom error page
             it.requestMatchers(
@@ -35,7 +49,10 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
                 it.defaultSuccessUrl("/")
                 it.loginPage(LOGIN_URL)
             }.addFilterAt(
-                JsonAuthenticationFilter(objectMapper, authManager), UsernamePasswordAuthenticationFilter::class.java
+                jsonFilter, UsernamePasswordAuthenticationFilter::class.java
+            )
+            .addFilterAfter(
+                LoginPageRedirectFilter(), UsernamePasswordAuthenticationFilter::class.java
             )
             .logout {
                 it.logoutUrl("/auth/logout/")
@@ -43,9 +60,6 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
             .cors(Customizer.withDefaults())
             .csrf {
                 it.csrfTokenRequestHandler(CsrfTokenRequestAttributeHandler())
-            }
-            .exceptionHandling {
-                it.authenticationEntryPoint(RestAwareEntryPoint(LOGIN_URL))
             }
 
         return httpSecurity.build()

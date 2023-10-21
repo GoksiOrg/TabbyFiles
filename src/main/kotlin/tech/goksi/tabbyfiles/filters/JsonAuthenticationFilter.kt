@@ -1,22 +1,21 @@
-package tech.goksi.tabbyfiles.configuration
+package tech.goksi.tabbyfiles.filters
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.HttpMethod.POST
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 class JsonAuthenticationFilter(private val objectMapper: ObjectMapper, authManager: AuthenticationManager) :
     UsernamePasswordAuthenticationFilter(authManager) {
     init {
-        setRequiresAuthenticationRequestMatcher(antMatcher(POST, "/auth/login"))
+        setRequiresAuthenticationRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/login"))
     }
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication? {
@@ -38,4 +37,3 @@ private data class AuthenticationRequest(
     @JsonProperty("password")
     val password: String
 )
-
