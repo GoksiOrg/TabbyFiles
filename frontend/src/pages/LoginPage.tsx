@@ -3,7 +3,7 @@ import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
 import DangerAlert from '../components/DangerAlert.tsx';
 import { useErrorBoundary } from 'react-error-boundary';
-/*TODO: global 500 error*/
+
 export default function LoginPage() {
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
     const [loginError, setLoginError] = useState<boolean>(false);
