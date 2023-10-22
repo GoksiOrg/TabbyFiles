@@ -8,7 +8,6 @@ import tech.goksi.tabbyfiles.models.TabbyUser
 import tech.goksi.tabbyfiles.requests.UserRequest
 import tech.goksi.tabbyfiles.services.TabbyUserService
 
-/*TODO: admin middleware*/
 @RestController
 @RequestMapping("users", consumes = ["application/json"])
 @AdminAccess

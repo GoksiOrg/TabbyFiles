@@ -60,7 +60,7 @@ class UserCommand(
         val userRequest = UserRequest(username, password, rolesToGive)
         val failed = validator.validate(userRequest)
         if (failed.isEmpty()) {
-            val user = userService.addUser(userRequest)
+            val user = userService.addUser(userRequest) //TODO: handle same name, same for role
             console.success(
                 "New user with username %s and id %d is successfully added to the system !",
                 username,
