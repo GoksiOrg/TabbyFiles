@@ -65,13 +65,8 @@ class RoleCommand(
         val failed = validator.validate(roleRequest)
 
         if (failed.isEmpty()) {
-            try {
-                val role = roleService.addRole(roleRequest)
-                console.success("Successfully added new role to system with name %s and id %d !", role.name, role.id)
-            } catch (exception: Exception) {
-                console.error("Error while adding new role !") // TODO
-                throw exception
-            }
+            val role = roleService.addRole(roleRequest)
+            console.success("Successfully added new role to system with name %s and id %d !", role.name, role.id)
         } else {
             for (constraintViolation in failed) {
                 console.error(constraintViolation.message)

@@ -60,18 +60,12 @@ class UserCommand(
         val userRequest = UserRequest(username, password, rolesToGive)
         val failed = validator.validate(userRequest)
         if (failed.isEmpty()) {
-            try {
-                val user = userService.addUser(userRequest)
-                console.success(
-                    "New user with username %s and id %d is successfully added to the system !",
-                    username,
-                    user.id
-                )
-
-            } catch (exception: Exception) {
-                console.error("Error while adding new user !") // TODO
-                throw exception
-            }
+            val user = userService.addUser(userRequest)
+            console.success(
+                "New user with username %s and id %d is successfully added to the system !",
+                username,
+                user.id
+            )
         } else {
             for (constraintViolation in failed) {
                 console.error(constraintViolation.message)
