@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component("tabbyVersion")
-class Version(
+class TabbyVersion(
     @Value("\${tabby.version}") private val version: String
-) : Comparable<Version> {
+) : Comparable<TabbyVersion> {
     companion object {
         const val CANARY_VERSION = "canary"
     }
@@ -21,7 +21,7 @@ class Version(
 
     fun isCanary() = version == CANARY_VERSION
 
-    override fun compareTo(other: Version): Int {
+    override fun compareTo(other: TabbyVersion): Int {
         var result = 0
         if (other.isCanary()) return -1 //canary is always latest :P
         for (i in 0..2) {
