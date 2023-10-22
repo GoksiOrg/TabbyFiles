@@ -11,7 +11,7 @@ import tech.goksi.tabbyfiles.utils.version.http.client.GithubClient
 
 @Component
 class VersionChecker(
-    private val version: Version
+    private val version: TabbyVersion
 ) {
 
     val logger by SLF4J
