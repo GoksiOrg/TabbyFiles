@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import LoginPage from './pages/LoginPage.tsx';
 import LoadingSpinner from './components/LoadingSpinner.tsx';
 import TabbyFooter from './components/TabbyFooter.tsx';
-import MainPage from './pages/MainPage.tsx';
+import MainRouter from './routers/MainRouter.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import GlobalError from './components/GlobalError.tsx';
 import NotFound from './components/NotFound.tsx';
@@ -22,7 +22,7 @@ export default function App() {
                             path={'/'}
                             element={
                                 <Suspense fallback={<LoadingSpinner />}>
-                                    <MainPage />
+                                    <MainRouter />
                                 </Suspense>
                             }
                         />
