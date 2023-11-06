@@ -12,37 +12,37 @@ import store from './state/store.ts';
 
 export default function App() {
     return (
-        <Provider store={store}>
-            <div className='mx-auto w-auto'>
-                <BrowserRouter>
-                    <ErrorBoundary
-                        fallbackRender={fallbackProps => <GlobalError fallbackProps={fallbackProps} />}
-                        onError={console.log}
-                        onReset={() => window.location.reload()}
-                    >
-                        <Routes>
-                            <Route
-                                path={'/'}
-                                element={
-                                    <Suspense fallback={<LoadingSpinner />}>
+        <div className='mx-auto w-auto'>
+            <BrowserRouter>
+                <ErrorBoundary
+                    fallbackRender={fallbackProps => <GlobalError fallbackProps={fallbackProps} />}
+                    onError={console.log}
+                    onReset={() => window.location.reload()}
+                >
+                    <Routes>
+                        <Route
+                            path={'/'}
+                            element={
+                                <Suspense fallback={<LoadingSpinner />}>
+                                    <Provider store={store}>
                                         <MainRouter />
-                                    </Suspense>
-                                }
-                            />
-                            <Route
-                                path={'/auth/login'}
-                                element={
-                                    <Suspense fallback={<LoadingSpinner />}>
-                                        <LoginPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route path={'*'} element={<NotFound />} />
-                        </Routes>
-                    </ErrorBoundary>
-                </BrowserRouter>
-                <TabbyFooter />
-            </div>
-        </Provider>
+                                    </Provider>
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path={'/auth/login'}
+                            element={
+                                <Suspense fallback={<LoadingSpinner />}>
+                                    <LoginPage />
+                                </Suspense>
+                            }
+                        />
+                        <Route path={'*'} element={<NotFound />} />
+                    </Routes>
+                </ErrorBoundary>
+            </BrowserRouter>
+            <TabbyFooter />
+        </div>
     );
 }
