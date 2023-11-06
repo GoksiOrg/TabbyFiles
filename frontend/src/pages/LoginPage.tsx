@@ -26,9 +26,6 @@ export default function LoginPage() {
             username: usernameReference.current!!.value,
             password: passwordReference.current!!.value,
         })
-            .then(() => {
-                setSubmitting(false);
-            })
             .catch(err => {
                 if (err.response.status === 401) {
                     setLoginError(true);
@@ -36,8 +33,8 @@ export default function LoginPage() {
                 } else {
                     showBoundary(err);
                 }
-                setSubmitting(false);
-            });
+            })
+            .finally(() => setSubmitting(false));
     };
     return (
         <form onSubmit={performLoginAction} noValidate>
