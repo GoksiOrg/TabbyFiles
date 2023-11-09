@@ -1,9 +1,11 @@
 package tech.goksi.tabbyfiles.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import tech.goksi.tabbyfiles.configuration.convertors.AwtColorSerializer
 import java.awt.Color
 import java.time.LocalDateTime
 
@@ -15,6 +17,7 @@ class Role(
     val id: Long = 0L,
     @Column(unique = true)
     val name: String,
+    @JsonSerialize(using = AwtColorSerializer::class)
     val color: Color,
     val admin: Boolean,
     @Column(name = "max_upload", nullable = false)
