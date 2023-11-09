@@ -1,4 +1,4 @@
-package tech.goksi.tabbyfiles.configuration
+package tech.goksi.tabbyfiles.configuration.convertors
 
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.type.TypeFactory

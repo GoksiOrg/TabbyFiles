@@ -1,4 +1,4 @@
-package tech.goksi.tabbyfiles.configuration
+package tech.goksi.tabbyfiles.configuration.convertors
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
