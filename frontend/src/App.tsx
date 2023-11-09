@@ -7,8 +7,6 @@ import MainRouter from './routers/MainRouter.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import GlobalError from './components/GlobalError.tsx';
 import NotFound from './components/NotFound.tsx';
-import { Provider } from 'react-redux';
-import store from './state/store.ts';
 
 export default function App() {
     return (
@@ -24,9 +22,7 @@ export default function App() {
                             path={'/'}
                             element={
                                 <Suspense fallback={<LoadingSpinner />}>
-                                    <Provider store={store}>
-                                        <MainRouter />
-                                    </Provider>
+                                    <MainRouter />
                                 </Suspense>
                             }
                         />
