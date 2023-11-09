@@ -11,6 +11,7 @@ export default function login(data: LoginData) {
             .then(() => {
                 http.post('/auth/login', data)
                     .then(response => {
+                        window.location = response.request.responseURL;
                         resolve(response);
                     })
                     .catch(reject);
