@@ -1,5 +1,6 @@
 package tech.goksi.tabbyfiles.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -19,6 +20,7 @@ class Role(
     @Column(name = "max_upload", nullable = false)
     val maxUpload: Long,
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     val users: Set<TabbyUser> = emptySet(),
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
