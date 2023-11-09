@@ -16,10 +16,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 class JsonAuthenticationFilter(
     private val objectMapper: ObjectMapper,
     authManager: AuthenticationManager,
-    private val successHandler: AuthenticationSuccessHandler
+    successHandler: AuthenticationSuccessHandler
 ) : UsernamePasswordAuthenticationFilter(authManager) {
     init {
         setRequiresAuthenticationRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/login"))
+        setAuthenticationSuccessHandler(successHandler)
     }
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication? {
@@ -30,9 +31,7 @@ class JsonAuthenticationFilter(
         request.inputStream.use {
             val authRequest = objectMapper.readValue<AuthenticationRequest>(it)
             val token = UsernamePasswordAuthenticationToken(authRequest.username, authRequest.password)
-            val authentication = this.authenticationManager.authenticate(token)
-            successHandler.onAuthenticationSuccess(request, response, authentication)
-            return authentication
+            return authenticationManager.authenticate(token)
         }
     }
 }
