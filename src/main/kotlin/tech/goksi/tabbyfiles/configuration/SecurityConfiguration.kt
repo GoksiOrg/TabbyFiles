@@ -9,12 +9,14 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.context.DelegatingSecurityContextRepository
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
+import tech.goksi.tabbyfiles.configuration.handlers.UserDetailsSavedRequestAuthenticationSuccessHandler
 import tech.goksi.tabbyfiles.filters.JsonAuthenticationFilter
 import tech.goksi.tabbyfiles.filters.LoginPageRedirectFilter
 
@@ -26,8 +28,12 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
     }
 
     @Bean
-    fun filterChain(httpSecurity: HttpSecurity, authManager: AuthenticationManager): SecurityFilterChain {
-        val jsonFilter = JsonAuthenticationFilter(objectMapper, authManager).apply {
+    fun filterChain(
+        httpSecurity: HttpSecurity,
+        authManager: AuthenticationManager,
+        successHandler: AuthenticationSuccessHandler
+    ): SecurityFilterChain {
+        val jsonFilter = JsonAuthenticationFilter(objectMapper, authManager, successHandler).apply {
             setSecurityContextRepository(
                 DelegatingSecurityContextRepository(
                     RequestAttributeSecurityContextRepository(),
@@ -46,7 +52,6 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
             it.anyRequest().authenticated()
         }
             .formLogin {
-                it.defaultSuccessUrl("/")
                 it.loginPage(LOGIN_URL)
             }.addFilterAt(
                 jsonFilter, UsernamePasswordAuthenticationFilter::class.java
@@ -63,6 +68,11 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
             }
 
         return httpSecurity.build()
+    }
+
+    @Bean
+    fun authSuccessHandler(): AuthenticationSuccessHandler {
+        return UserDetailsSavedRequestAuthenticationSuccessHandler("/", objectMapper)
     }
 
     @Bean
