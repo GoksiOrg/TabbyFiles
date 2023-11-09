@@ -21,4 +21,10 @@ class SPAController(objectMapper: ObjectMapper) {
         model.addAttribute("manifest", manifest)
         return "index"
     }
+
+    @GetMapping("/")
+    fun proceedToFrontend(model: Model): String {
+        model.addAttribute("manifest", manifest)
+        return "index"
+    }
 }
