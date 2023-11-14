@@ -13,7 +13,7 @@ const userSlice = createSlice({
     name: 'userStore',
     initialState: initialState,
     reducers: {
-        addUser(state, action: PayloadAction<TabbyUser>) {
+        setUser(state, action: PayloadAction<TabbyUser>) {
             state.user = action.payload;
         },
         clearUser(state, _: PayloadAction) {
@@ -22,5 +22,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { addUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
