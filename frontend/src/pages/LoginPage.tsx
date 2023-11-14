@@ -3,6 +3,8 @@ import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
 import DangerAlert from '../components/DangerAlert.tsx';
 import { useErrorBoundary } from 'react-error-boundary';
+import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 export default function LoginPage() {
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
@@ -10,6 +12,7 @@ export default function LoginPage() {
     const usernameReference = useRef<HTMLInputElement>(null);
     const passwordReference = useRef<HTMLInputElement>(null);
     const { showBoundary } = useErrorBoundary();
+    const navigate = useNavigate();
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.target.classList.remove('is-invalid');
     };
@@ -26,8 +29,11 @@ export default function LoginPage() {
             username: usernameReference.current!!.value,
             password: passwordReference.current!!.value,
         })
-            .catch(err => {
-                if (err.response.status === 401) {
+            .then(response => {
+                navigate(`/${response.data.continue}`);
+            })
+            .catch((err: AxiosError) => {
+                if (err.response?.status === 401) {
                     setLoginError(true);
                     console.log(err);
                 } else {

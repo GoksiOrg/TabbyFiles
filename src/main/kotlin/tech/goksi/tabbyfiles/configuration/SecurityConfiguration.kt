@@ -16,7 +16,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
-import tech.goksi.tabbyfiles.configuration.handlers.UserDetailsSavedRequestAuthenticationSuccessHandler
+import tech.goksi.tabbyfiles.configuration.handlers.ContinueUrlAuthenticationSuccessHandler
 import tech.goksi.tabbyfiles.filters.JsonAuthenticationFilter
 import tech.goksi.tabbyfiles.filters.LoginPageRedirectFilter
 
@@ -31,9 +31,9 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
     fun filterChain(
         httpSecurity: HttpSecurity,
         authManager: AuthenticationManager,
-        successHandler: AuthenticationSuccessHandler
+        authSuccessHandler: AuthenticationSuccessHandler
     ): SecurityFilterChain {
-        val jsonFilter = JsonAuthenticationFilter(objectMapper, authManager, successHandler).apply {
+        val jsonFilter = JsonAuthenticationFilter(objectMapper, authManager, authSuccessHandler).apply {
             setSecurityContextRepository(
                 DelegatingSecurityContextRepository(
                     RequestAttributeSecurityContextRepository(),
@@ -72,7 +72,7 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
 
     @Bean
     fun authSuccessHandler(): AuthenticationSuccessHandler {
-        return UserDetailsSavedRequestAuthenticationSuccessHandler("/", objectMapper)
+        return ContinueUrlAuthenticationSuccessHandler(objectMapper)
     }
 
     @Bean
