@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 
+/*TODO: make faliure redirect to /auth/login?continue=??*/
 class ContinueUrlAuthenticationSuccessHandler(private val objectMapper: ObjectMapper) :
     SimpleUrlAuthenticationSuccessHandler() {
     companion object {
@@ -13,7 +14,7 @@ class ContinueUrlAuthenticationSuccessHandler(private val objectMapper: ObjectMa
     }
 
     override fun handle(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
-        val next = request.getParameter(QUERY_PARAMETER) ?: ""
+        val next = request.getParameter(QUERY_PARAMETER) ?: "/"
         val responseMap = mapOf("continue" to next)
 
         response.writer.write(objectMapper.writeValueAsString(responseMap))

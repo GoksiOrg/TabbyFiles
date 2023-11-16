@@ -30,7 +30,7 @@ export default function LoginPage() {
             password: passwordReference.current!!.value,
         })
             .then(response => {
-                navigate(`/${response.data.continue}`);
+                navigate(response.data.continue);
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {

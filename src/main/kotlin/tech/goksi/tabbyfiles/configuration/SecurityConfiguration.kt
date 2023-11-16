@@ -65,6 +65,8 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
             .cors(Customizer.withDefaults())
             .csrf {
                 it.csrfTokenRequestHandler(CsrfTokenRequestAttributeHandler())
+            }.exceptionHandling {
+                it.authenticationEntryPoint(SaveRequestAuthenticationEntryPoint())
             }
 
         return httpSecurity.build()
