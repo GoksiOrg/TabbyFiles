@@ -22,7 +22,7 @@ class Role(
     val admin: Boolean,
     @Column(name = "max_upload", nullable = false)
     val maxUpload: Long,
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     @JsonIgnore
     val users: Set<TabbyUser> = emptySet(),
     @CreationTimestamp
