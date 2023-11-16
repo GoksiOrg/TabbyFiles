@@ -5,7 +5,6 @@ import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.GenericFilterBean
@@ -16,8 +15,7 @@ class LoginPageRedirectFilter : GenericFilterBean() {
         val httpRequest = request as HttpServletRequest
         val httpResponse = response as HttpServletResponse
         if (isAuthenticated() && SecurityConfiguration.LOGIN_URL == httpRequest.requestURI) {
-            httpResponse.status = HttpStatus.TEMPORARY_REDIRECT.value()
-            httpResponse.setHeader("Location", "/")
+            httpResponse.sendRedirect("/")
         }
         chain.doFilter(request, response)
     }
