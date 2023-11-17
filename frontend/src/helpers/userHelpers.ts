@@ -1,8 +1,4 @@
-import { TabbyUser } from '../index.ts';
-
-export function isAdmin(user: TabbyUser) {
-    return user.roles.some(role => role.admin);
-}
+import { TabbyUser } from '../state/user';
 
 export function getMaxUpload(user: TabbyUser) {
     let currentMax = -1;
