@@ -6,6 +6,7 @@ export interface TabbyUser extends TimestampEntity {
     id: number;
     username: string;
     roles: TabbyRole[];
+    isAdmin: boolean;
 }
 
 export interface TabbyRole extends TimestampEntity {

@@ -35,12 +35,14 @@ class TabbyUser(
     @Column(name = "updated_at", nullable = false)
     val updatedAt: LocalDateTime = LocalDateTime.now()
 ) : UserDetails {
-    override fun getAuthorities(): List<GrantedAuthority> {
-        return roles.map { SimpleGrantedAuthority(it.name) }
-    }
-
+    
     fun isAdmin(): Boolean {
         return roles.any { it.admin }
+    }
+
+    @JsonIgnore
+    override fun getAuthorities(): List<GrantedAuthority> {
+        return roles.map { SimpleGrantedAuthority(it.name) }
     }
 
     override fun getPassword() = password
@@ -49,12 +51,16 @@ class TabbyUser(
 
     /*Going to leave all this true for now*/
 
+    @JsonIgnore
     override fun isAccountNonExpired() = true
 
+    @JsonIgnore
     override fun isAccountNonLocked() = true
 
+    @JsonIgnore
     override fun isCredentialsNonExpired() = true
 
+    @JsonIgnore
     override fun isEnabled() = true
 
     override fun equals(other: Any?): Boolean {
