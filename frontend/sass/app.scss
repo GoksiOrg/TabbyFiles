@@ -24,6 +24,28 @@ body {
   color: $secondary-tabby !important;
 }
 
+.text-tabby-tertary {
+  color: $tertary-tabby !important;
+}
+
 .border-tertary {
   border-color: $tertary-tabby !important;
+}
+
+.bg-body-secondary-tabby {
+  background-color: $secondary-tabby;
+}
+
+.nav-active {
+  @extend .pe-none;
+  border-bottom: 4px solid;
+  border-bottom-color: red; //TODO
+  opacity: 75%;
+}
+
+.nav-header-icon {
+  @extend .text-white;
+  @extend .nav-link;
+  @extend .d-none;
+  @extend .d-sm-block;
 }
