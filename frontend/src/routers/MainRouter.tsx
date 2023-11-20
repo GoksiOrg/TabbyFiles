@@ -1,7 +1,13 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store.ts';
+import NavBar from '../components/navigation/NavBar.tsx';
 
 export default function MainRouter() {
     const username = useSelector((state: RootState) => state.user.user);
-    return <h1>Username: ${username.username}</h1>;
+    return (
+        <>
+            <NavBar />
+            <h1>Username: ${username.username}</h1>
+        </>
+    );
 }
