@@ -60,7 +60,7 @@ class SecurityConfiguration(private val objectMapper: ObjectMapper) {
                 LoginPageRedirectFilter(), UsernamePasswordAuthenticationFilter::class.java
             )
             .logout {
-                it.logoutUrl("/auth/logout/")
+                it.logoutUrl("/auth/logout")
             }
             .cors(Customizer.withDefaults())
             .csrf {

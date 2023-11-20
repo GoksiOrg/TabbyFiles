@@ -4,9 +4,19 @@ import { RootState } from '../../state/store.ts';
 import { faFolderOpen, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import NavDropdownItem from './NavDropdownItem.tsx';
 import NavItem from './NavItem.tsx';
+import logout from '../../api/logout.ts';
+import { useErrorBoundary } from 'react-error-boundary';
 
 export default function NavBar() {
     const { username, isAdmin } = useSelector((state: RootState) => state.user.user);
+    const { showBoundary } = useErrorBoundary();
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+                window.location.href = '/auth/login';
+            })
+            .catch(showBoundary);
+    };
     return (
         <nav
             className='navbar navbar-expand-sm bg-body-secondary-tabby'
@@ -39,7 +49,9 @@ export default function NavBar() {
                                 Logged in as: <span className='link-info'>{username}</span>
                             </p>
                             <hr className='dropdown-divider' />
-                            <a className='dropdown-item'>Logout</a>
+                            <button className='dropdown-item' onClick={() => handleLogout()}>
+                                Logout
+                            </button>
                         </NavDropdownItem>
                         {isAdmin && <NavItem icon={faLock} text='Admin area' path='/admin/' />}
                         <NavItem icon={faFolderOpen} text='Your files' path='/files/' />
