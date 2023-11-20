@@ -22,11 +22,7 @@ export default function login(data: LoginData) {
     return new Promise<AxiosResponse<LoginResponse, any>>((resolve, reject) => {
         http.post('/api/csrf')
             .then(() => {
-                http.post<LoginResponse>(`/auth/login${toAppend}`, data)
-                    .then(response => {
-                        resolve(response);
-                    })
-                    .catch(reject);
+                http.post<LoginResponse>(`/auth/login${toAppend}`, data).then(resolve).catch(reject);
             })
             .catch(reject);
     });
