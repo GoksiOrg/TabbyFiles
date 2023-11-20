@@ -1,0 +1,51 @@
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../state/store.ts';
+import { faFolderOpen, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import NavDropdownItem from './NavDropdownItem.tsx';
+import NavItem from './NavItem.tsx';
+
+export default function NavBar() {
+    const { username, isAdmin } = useSelector((state: RootState) => state.user.user);
+    return (
+        <nav
+            className='navbar navbar-expand-sm bg-body-secondary-tabby'
+            aria-label='Main navigation'
+            data-bs-theme='dark'
+        >
+            <div className='container-fluid'>
+                <div className='d-flex justify-content-between'>
+                    <div className='navbar-brand d-flex align-items-center'>
+                        <Link to='/'>
+                            <img src='static/maca_brand.png' height='9%' width='9%' alt='Tabby cat' />
+                        </Link>
+                    </div>
+                    <button
+                        className='navbar-toggler'
+                        type='button'
+                        data-bs-toggle='collapse'
+                        data-bs-target='#navigation'
+                        aria-controls='navigation'
+                        aria-expanded='false'
+                        aria-label='Toggle navigation'
+                    >
+                        <span className='navbar-toggler-icon'></span>
+                    </button>
+                </div>
+                <div className='collapse navbar-collapse' id='navigation'>
+                    <ul className='navbar-nav ms-auto list-unstyled mb-0 me-3'>
+                        <NavDropdownItem icon={faUser} text={'User'}>
+                            <p className='dropdown-item'>
+                                Logged in as: <span className='link-info'>{username}</span>
+                            </p>
+                            <hr className='dropdown-divider' />
+                            <a className='dropdown-item'>Logout</a>
+                        </NavDropdownItem>
+                        {isAdmin && <NavItem icon={faLock} text='Admin area' path='/admin/' />}
+                        <NavItem icon={faFolderOpen} text='Your files' path='/files/' />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
+}
