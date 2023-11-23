@@ -14,7 +14,12 @@ export default function NavItem(props: NavItemProps) {
     const activeClass = location.pathname === props.path ? 'nav-active' : '';
     return (
         <li className='nav-item'>
-            <Link className={`nav-entry me-3 ${activeClass}`} to={props.path}>
+            <Link
+                className={`nav-entry me-3 ${activeClass}`}
+                to={props.path}
+                data-toggle='tooltip'
+                title={`${props.text}`}
+            >
                 <FontAwesomeIcon icon={props.icon} size='2x' />
             </Link>
             <div className='w-50'>
