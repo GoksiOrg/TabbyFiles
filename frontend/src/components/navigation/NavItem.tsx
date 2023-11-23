@@ -8,7 +8,6 @@ interface NavItemProps {
     path: string;
 }
 
-/*TODO: tooltip*/
 export default function NavItem(props: NavItemProps) {
     const location = useLocation();
     const activeClass = location.pathname === props.path ? 'nav-active' : '';
