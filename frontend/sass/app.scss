@@ -36,6 +36,10 @@ body {
   background-color: $secondary-tabby;
 }
 
+.bg-body-primary-tabby {
+  background-color: $primary-tabby;
+}
+
 .nav-active {
   @extend .pe-none;
   border-bottom: 4px solid;
