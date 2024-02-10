@@ -36,6 +36,7 @@ module.exports = {
         ],
         '@typescript-eslint/explicit-function-return-type': 'off',
         'react/react-in-jsx-scope': 'off',
+        'react/no-unescaped-entities': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/prefer-nullish-coalescing': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
