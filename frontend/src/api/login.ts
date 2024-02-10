@@ -1,5 +1,5 @@
 import http from '../helpers/httpService';
-import { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 
 export interface LoginData {
     username: string;

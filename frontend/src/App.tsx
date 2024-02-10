@@ -8,9 +8,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 import GlobalError from './components/GlobalError.tsx';
 import NotFound from './pages/NotFound.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './state/store.ts';
+import { type RootState } from './state/store.ts';
 import { setUser } from './state/user/actions/slice/userSlice.ts';
-import { TabbyUser } from './state/user';
+import { type TabbyUser } from './state/user';
 
 interface ExtendedWindow extends Window {
     user?: TabbyUser;
@@ -29,7 +29,7 @@ export default function App() {
                 <ErrorBoundary
                     fallbackRender={fallbackProps => <GlobalError fallbackProps={fallbackProps} />}
                     onError={console.log}
-                    onReset={() => window.location.reload()}
+                    onReset={() => { window.location.reload(); }}
                 >
                     <Routes>
                         <Route

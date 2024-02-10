@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../state/store.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { type RootState } from '../../state/store';
 import { faFolderOpen, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import NavDropdownItem from './NavDropdownItem.tsx';
-import NavItem from './NavItem.tsx';
-import logout from '../../api/logout.ts';
+import NavDropdownItem from './NavDropdownItem';
+import NavItem from './NavItem';
+import logout from '../../api/logout';
 import { useErrorBoundary } from 'react-error-boundary';
+import { clearUser } from '../../state/user/actions/slice/userSlice';
 
 export default function NavBar() {
     const { username, isAdmin } = useSelector((state: RootState) => state.user.user);
     const { showBoundary } = useErrorBoundary();
+    const dispatch = useDispatch();
     const handleLogout = () => {
         logout()
             .then(() => {
+                dispatch(clearUser());
                 window.location.href = '/auth/login';
             })
             .catch(showBoundary);
@@ -49,7 +52,12 @@ export default function NavBar() {
                                 Logged in as: <span className='link-info'>{username}</span>
                             </p>
                             <hr className='dropdown-divider' />
-                            <button className='dropdown-item' onClick={() => handleLogout()}>
+                            <button
+                                className='dropdown-item'
+                                onClick={() => {
+                                    handleLogout();
+                                }}
+                            >
                                 Logout
                             </button>
                         </NavDropdownItem>

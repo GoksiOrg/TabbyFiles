@@ -1,9 +1,9 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useRef, useState } from 'react';
 import validateInput from '../helpers/validateInput.ts';
 import login from '../api/login.ts';
 import DangerAlert from '../components/DangerAlert.tsx';
 import { useErrorBoundary } from 'react-error-boundary';
-import { AxiosError } from 'axios';
+import { type AxiosError } from 'axios';
 
 export default function LoginPage() {
     const [isSubmitting, setSubmitting] = useState<boolean>(false);
@@ -17,18 +17,18 @@ export default function LoginPage() {
     const performLoginAction = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const usernameCheck = validateInput(
-            usernameReference.current!!,
+            usernameReference.current!,
             str => str.length >= 4 && str.length < 15
         );
-        const passwordCheck = validateInput(passwordReference.current!!, str => str.length > 0); // TODO
+        const passwordCheck = validateInput(passwordReference.current!, str => str.length > 0); // TODO
         if (!usernameCheck || !passwordCheck) return;
         setSubmitting(true);
         login({
-            username: usernameReference.current!!.value,
-            password: passwordReference.current!!.value,
+            username: usernameReference.current!.value,
+            password: passwordReference.current!.value,
         })
             .then(response => {
-                window.location.href = response.data.continue; //we need this so page reloads
+                window.location.href = response.data.continue; // we need this so page reloads
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 401) {
@@ -38,7 +38,7 @@ export default function LoginPage() {
                     showBoundary(err);
                 }
             })
-            .finally(() => setSubmitting(false));
+            .finally(() => { setSubmitting(false); });
     };
     return (
         <form onSubmit={performLoginAction} noValidate>
@@ -80,7 +80,7 @@ export default function LoginPage() {
                     <DangerAlert
                         shouldRender={loginError}
                         message={'Invalid username or password !'}
-                        onClose={() => setLoginError(false)}
+                        onClose={() => { setLoginError(false); }}
                     />
                     <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
                         Login

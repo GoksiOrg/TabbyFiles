@@ -1,17 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TabbyUser, UserStore } from '../../index.ts';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { type TabbyUser, type UserStore } from '../../index';
 
 const initialState: UserStore = {
     user: {
         id: -1,
         username: '',
         roles: [],
+        isAdmin: false,
     },
 };
 
 const userSlice = createSlice({
     name: 'userStore',
-    initialState: initialState,
+    initialState,
     reducers: {
         setUser(state, action: PayloadAction<TabbyUser>) {
             state.user = action.payload;

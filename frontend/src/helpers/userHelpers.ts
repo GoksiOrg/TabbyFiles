@@ -1,4 +1,4 @@
-import { TabbyUser } from '../state/user';
+import { type TabbyUser } from '../state/user';
 
 export function getMaxUpload(user: TabbyUser) {
     let currentMax = -1;

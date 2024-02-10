@@ -1,6 +1,6 @@
-import { Children, PropsWithChildren, useEffect, useState } from 'react';
+import { Children, type PropsWithChildren, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 interface NavDropdownItemProps extends PropsWithChildren {
     text: string;
@@ -21,7 +21,7 @@ export default function NavDropdownItem(props: NavDropdownItemProps) {
                 >
                     {props.text}
                 </a>
-                <Menu children={props.children} />
+                <Menu>{props.children}</Menu>
             </div>
         </li>
     );
@@ -37,7 +37,9 @@ function Menu(props: PropsWithChildren) {
         };
         window.addEventListener('resize', onResize, false);
 
-        return () => window.removeEventListener('resize', onResize, false);
+        return () => {
+            window.removeEventListener('resize', onResize, false);
+        };
     }, [isSmall]);
 
     return (

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../state/store.ts';
+import { type RootState } from '../state/store.ts';
 import NavBar from '../components/navigation/NavBar.tsx';
 
 export default function MainRouter() {

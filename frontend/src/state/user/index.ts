@@ -1,4 +1,4 @@
-import { TimestampEntity } from '../timestampEntity.ts';
+import { type TimestampEntity } from '../timestampEntity.ts';
 
 type HexColor = `#${string}`;
 

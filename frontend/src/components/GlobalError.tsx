@@ -1,4 +1,4 @@
-import { FallbackProps } from 'react-error-boundary';
+import { type FallbackProps } from 'react-error-boundary';
 
 export default function GlobalError(props: { fallbackProps: FallbackProps }) {
     const error = props.fallbackProps.error as Error;
